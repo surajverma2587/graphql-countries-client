@@ -1,46 +1,37 @@
-import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import React, { useState } from 'react'
 
-import countries from '../queries/countries'
+import { useGraphqlQuery } from '../hooks/useGraphqlQuery'
 
-const Country = ({ name, code, currency, capital }) => (
-  <div className="card m-3" style={{ width: '50%' }}>
-    <div className="card-body">
-      <h5 className="card-title">{name} - {code}</h5>
-      <div className="row">
-        <div className="col"><h6>Capital</h6></div>
-        <div className="col">{capital}</div>
-      </div>
-      <div className="row">
-        <div className="col"><h6>Currency</h6></div>
-        <div className="col">{currency}</div>
-      </div>
-    </div>
-  </div>
-)
+import DropDown from './DropDown'
+import Country from './Country'
 
-const Countries = () => {
-  const { data, loading, error } = useQuery(countries())
+const Countries = ({ continent }) => {
+  const [country, setCountry] = useState('')
+  const [data, LoaderOrError] = useGraphqlQuery('countries', { continent })
 
-  if (loading) {
-    return <span>Loading...</span>
+  const onChange = e => {
+    setCountry(e.target.value)
   }
 
-  if (error) {
-    return <span>Error</span>
+  if (LoaderOrError) {
+    return LoaderOrError
   }
 
-  console.log(data)
-
-  return (
-    <div>
-      {
-        data.countries.map(country => (
-          <Country {...country} key={country.code} />
-        ))
-      }
-    </div>
-  )
+  if (data && data.countries) {
+    return (
+      <div>
+        <DropDown
+          label="Select a country"
+          value={country}
+          options={data.countries}
+          onChange={onChange}
+        />
+        {
+          country ? <Country code={country} /> : null
+        }
+      </div>
+    )
+  }
 }
 
 export default Countries

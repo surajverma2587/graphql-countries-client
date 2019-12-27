@@ -1,20 +1,16 @@
 import gql from 'graphql-tag'
 
-const countries = () => {
-  return gql`
-    query Countries {
-      countries {
+export const countries = gql`
+  query Countries($continent: String!) {
+    countries(continent: $continent) {
+      code
+      name
+      capital
+      currency
+      continent {
         code
         name
-        capital
-        currency
-        continent {
-          code
-          name
-        }
       }
     }
-  `
-}
-
-export default countries
+  }
+`
