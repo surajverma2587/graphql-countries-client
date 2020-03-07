@@ -1,16 +1,11 @@
 import React from 'react'
-import Loader from 'react-loader-spinner'
+import { ClipLoader } from "react-spinners"
 
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
-
-const Loading = () => {
+const Loading = ({ loading }) => {
   return (
-    <Loader
-      type="ThreeDots"
-      color="#00BFFF"
-      height={80}
-      width={80}
-    />
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+      <ClipLoader color={"#4d4d4d"} loading={loading} />
+    </div>
   )
 }
 

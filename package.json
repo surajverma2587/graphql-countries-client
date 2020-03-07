@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css",
+    "build": "npm run build:style && react-scripts build",
+    "start": "npm run build:style && react-scripts start",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -17,12 +18,15 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.16",
+    "autoprefixer": "^9.7.4",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-loader-spinner": "^3.1.5",
-    "react-scripts": "^3.3.0"
+    "react-scripts": "^3.3.0",
+    "react-spinners": "^0.8.0",
+    "tailwindcss": "^1.2.0"
   },
   "browserslist": {
     "production": [

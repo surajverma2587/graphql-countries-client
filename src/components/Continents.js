@@ -4,34 +4,34 @@ import { useGraphqlQuery } from '../hooks/useGraphqlQuery'
 
 import Countries from './Countries'
 import DropDown from './DropDown'
+import { get } from '../util'
 
 const Continents = () => {
   const [continent, setContinent] = useState('')
-  const [data, LoaderOrError] = useGraphqlQuery('continents')
+  const [data, loading, error] = useGraphqlQuery('continents')
 
   const onChange = e => {
     setContinent(e.target.value)
   }
 
-  if (LoaderOrError) {
-    return LoaderOrError
+  if (error) {
+    return <div>Error!!</div>
   }
 
-  if (data && data.continents) {
-    return (
-      <div>
-        <DropDown
-          label="Select a continent"
-          value={continent}
-          options={data.continents}
-          onChange={onChange}
-        />
-        {
-          continent ? <Countries continent={continent} /> : null
-        }
-      </div>
-    )
-  }
+  return (
+    <div className="flex flex-wrap my-4 justify-center text-center">
+      <DropDown
+        label="Select a continent"
+        value={continent}
+        options={get(data, ['continents'], [])}
+        onChange={onChange}
+        loading={loading}
+      />
+      {
+        continent ? <Countries continent={continent} /> : null
+      }
+    </div>
+  )
 }
 
 export default Continents

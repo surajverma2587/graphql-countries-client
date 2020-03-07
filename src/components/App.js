@@ -3,7 +3,7 @@ import React from 'react'
 import Continents from './Continents'
 
 const App = () => (
-  <div className="container m-3">
+  <div className="container">
     <Continents />
   </div>
 )
